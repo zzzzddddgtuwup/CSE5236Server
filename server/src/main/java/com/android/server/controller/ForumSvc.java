@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
@@ -31,6 +32,13 @@ public class ForumSvc implements ForumSvcApi{
 	@RequestMapping(value=ForumSvcApi.FORUM_SVC_PATH, method=RequestMethod.POST)
 	public @ResponseBody boolean addForum(@RequestBody Forum f) {
 		forum.save(f);
-		return false;
+		return true;
+	}
+
+	@Override
+	@RequestMapping(value=ForumSvcApi.FORUM_NAME_SEARCH_PATH,method=RequestMethod.GET)
+	public @ResponseBody Collection<Forum> searchByName(
+			@RequestParam(FORUM_PART_NAME)String partname) {
+		return forum.searchByPartName("%"+partname+"%");
 	}
 }

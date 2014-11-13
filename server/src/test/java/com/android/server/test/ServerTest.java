@@ -21,7 +21,8 @@ import com.android.server.userrepository.User;
 import com.google.common.collect.Lists;
 
 public class ServerTest {
-	private final String TEST_URL = "http://nearby.elasticbeanstalk.com";
+//	private final String TEST_URL = "http://nearby.elasticbeanstalk.com";
+	private final String TEST_URL = "http://localhost:8080/";
 	
 	private QuestionSvcApi questionService = new RestAdapter.Builder()
 		.setEndpoint(TEST_URL).setLogLevel(LogLevel.FULL).build()
@@ -76,6 +77,10 @@ public class ServerTest {
 		Forum f1 = Lists.newArrayList(forumLists).get(0);
 		Forum f2 = Lists.newArrayList(forumLists).get(1);
 		
+		forumLists = forumService.searchByName("ohio");
+		for(Forum f:forumLists){
+			System.out.println("hahahah" + f.getName());
+		}
 		Question q1 = new Question("who am I?");
 		q1.setForum(f1);
 		q1.setUser(user1);
