@@ -2,7 +2,9 @@ package com.android.server.api;
 
 import java.util.Collection;
 
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
 
 import com.android.server.forumrepository.Forum;
 
@@ -15,4 +17,7 @@ public interface ForumSvcApi {
 	
 	@GET(FORUM_SVC_PATH)
 	public Collection<Forum> getForumList();
+	
+	@POST(FORUM_SVC_PATH)
+	public boolean addForum(@Body Forum f);
 }

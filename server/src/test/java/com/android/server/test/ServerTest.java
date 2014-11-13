@@ -21,7 +21,7 @@ import com.android.server.userrepository.User;
 import com.google.common.collect.Lists;
 
 public class ServerTest {
-	private final String TEST_URL = "http://nearbyqa.elasticbeanstalk.com";
+	private final String TEST_URL = "http://nearby.elasticbeanstalk.com";
 	
 	private QuestionSvcApi questionService = new RestAdapter.Builder()
 		.setEndpoint(TEST_URL).setLogLevel(LogLevel.FULL).build()
@@ -40,12 +40,13 @@ public class ServerTest {
 	
 	@Test
 	public void testAll() throws Exception {
+		boolean ok = false;
 		//add user1
 		User user1 = new User("zdg","pw");
 		//add user2
 		User user2 = new User("tim","pw");
 		
-		boolean ok = userService.addUser(user1);
+		ok = userService.addUser(user1);
 		System.out.println(ok);
 		assertTrue(ok);
 		ok = userService.addUser(user2);
@@ -60,6 +61,12 @@ public class ServerTest {
 //		for(User u:usersLists){
 //			System.out.println(u);
 //		}
+		String[] forum_name = {"ohio union","oia","Thompson lib","wilce center",
+				"rpec","18th lib","Dreese lab","Hitchcock & Bolz","Ohio stadium"};
+		for(int i = 0; i < 9; i++){
+			Forum forum = new Forum(forum_name[i]);
+			forumService.addForum(forum);
+		}
 		
 		Collection<Forum> forumLists = forumService.getForumList();
 		Forum f1 = Lists.newArrayList(forumLists).get(0);
