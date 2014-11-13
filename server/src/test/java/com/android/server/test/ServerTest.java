@@ -58,6 +58,10 @@ public class ServerTest {
 		user1 = new ArrayList<>(usersLists).get(0);
 		user2 = new ArrayList<>(usersLists).get(1);
 		
+		ok = userService.validate(new User("zdg","pw"));
+		assertTrue(ok);
+		ok = userService.validate(new User("zdg","aha"));
+		assertTrue(!ok);
 //		for(User u:usersLists){
 //			System.out.println(u);
 //		}
