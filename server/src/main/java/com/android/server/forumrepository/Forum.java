@@ -1,4 +1,4 @@
-package com.android.server.repository;
+package com.android.server.forumrepository;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

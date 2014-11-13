@@ -1,11 +1,11 @@
-package com.android.server.repository;
+package com.android.server.answerrepository;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AnswerRepository extends CrudRepository<Answer, Long> {
-	public List<Answer> findByUser_Uid(long uid);
+	public Collection<Answer> findByUser_Uid(long uid);
 }

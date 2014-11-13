@@ -1,4 +1,4 @@
-package com.android.server.repository;
+package com.android.server.answerrepository;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.android.server.questionrepository.Question;
+import com.android.server.userrepository.User;
 import com.google.common.base.Objects;
 
 @Entity

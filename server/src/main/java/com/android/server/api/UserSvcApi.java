@@ -2,7 +2,7 @@ package com.android.server.api;
 
 import java.util.Collection;
 
-import com.android.server.repository.User;
+import com.android.server.userrepository.User;
 
 import retrofit.http.Body;
 import retrofit.http.GET;

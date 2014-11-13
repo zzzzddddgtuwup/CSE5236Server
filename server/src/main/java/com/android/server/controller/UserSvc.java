@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.android.server.api.UserSvcApi;
-import com.android.server.repository.User;
-import com.android.server.repository.UserRepository;
+import com.android.server.userrepository.User;
+import com.android.server.userrepository.UserRepository;
 import com.google.common.collect.Lists;
 
 @Controller

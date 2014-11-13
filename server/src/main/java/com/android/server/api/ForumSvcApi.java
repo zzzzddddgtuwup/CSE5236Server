@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import retrofit.http.GET;
 
-import com.android.server.repository.Forum;
+import com.android.server.forumrepository.Forum;
 
 public interface ForumSvcApi {
 

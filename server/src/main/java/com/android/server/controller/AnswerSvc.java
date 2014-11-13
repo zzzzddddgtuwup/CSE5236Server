@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.android.server.answerrepository.Answer;
+import com.android.server.answerrepository.AnswerRepository;
 import com.android.server.api.AnswerSvcApi;
-import com.android.server.repository.Answer;
-import com.android.server.repository.AnswerRepository;
-import com.android.server.repository.UserRepository;
+import com.android.server.userrepository.UserRepository;
 import com.google.common.collect.Lists;
 
 @Controller

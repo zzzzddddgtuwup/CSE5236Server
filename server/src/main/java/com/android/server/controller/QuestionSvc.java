@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.android.server.repository.Question;
-import com.android.server.repository.QuestionRepository;
-import com.android.server.repository.UserRepository;
+import com.android.server.questionrepository.Question;
+import com.android.server.questionrepository.QuestionRepository;
+import com.android.server.userrepository.UserRepository;
 import com.google.common.collect.Lists;
 
 @Controller

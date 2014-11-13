@@ -5,21 +5,24 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+//import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.android.server.repository.AnswerRepository;
-import com.android.server.repository.ForumRepository;
-import com.android.server.repository.QuestionRepository;
-import com.android.server.repository.UserRepository;
+import com.android.server.answerrepository.*;
+import com.android.server.forumrepository.*;
+import com.android.server.questionrepository.*;
+import com.android.server.userrepository.*;
+
 
 //Tell Spring to automatically inject any dependencies that are marked in
 //our classes with @Autowired
 @EnableAutoConfiguration
 // Tell Spring to automatically create a JPA implementation of our
 // VideoRepository
-@EnableJpaRepositories(basePackageClasses = 
-{QuestionRepository.class,AnswerRepository.class,UserRepository.class,ForumRepository.class})
+@EntityScan(basePackageClasses={Answer.class,Forum.class,Question.class,User.class})
+@EnableJpaRepositories(basePackageClasses={AnswerRepository.class,UserRepository.class,
+		ForumRepository.class,QuestionRepository.class})
 // Tell Spring that this object represents a Configuration for the
 // application
 @Configuration
@@ -31,12 +34,26 @@ import com.android.server.repository.UserRepository;
 // Any class in this package that is annotated with @Controller is going to be
 // automatically discovered and connected to the DispatcherServlet.
 @ComponentScan(basePackages={"com.android.server.controller"})
-@EntityScan(basePackages={"com.android.server.repository"})
-
 public class Application {
 	
 	// Tell Spring to launch our app!
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
+	
+//	@Value("${AWS_ACCESS_KEY_ID}")
+//    private String amazonAWSAccessKey;
+//
+//    @Value("${AWS_SECRET_KEY}")
+//    private String amazonAWSSecretKey;
+//    
+//    @Bean
+//    public AmazonRDS rdsClient() {
+//        return new AmazonRDSClient(amazonAWSCredentials());
+//    }
+//    
+//    @Bean
+//    public AWSCredentials amazonAWSCredentials() {
+//        return new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey);
+//    }
 }

@@ -10,18 +10,18 @@ import org.junit.Test;
 import retrofit.RestAdapter;
 import retrofit.RestAdapter.LogLevel;
 
+import com.android.server.answerrepository.Answer;
 import com.android.server.api.AnswerSvcApi;
 import com.android.server.api.ForumSvcApi;
 import com.android.server.api.QuestionSvcApi;
 import com.android.server.api.UserSvcApi;
-import com.android.server.repository.Answer;
-import com.android.server.repository.Forum;
-import com.android.server.repository.Question;
-import com.android.server.repository.User;
+import com.android.server.forumrepository.Forum;
+import com.android.server.questionrepository.Question;
+import com.android.server.userrepository.User;
 import com.google.common.collect.Lists;
 
 public class ServerTest {
-	private final String TEST_URL = "http://localhost:8080";
+	private final String TEST_URL = "http://nearbyqa.elasticbeanstalk.com";
 	
 	private QuestionSvcApi questionService = new RestAdapter.Builder()
 		.setEndpoint(TEST_URL).setLogLevel(LogLevel.FULL).build()

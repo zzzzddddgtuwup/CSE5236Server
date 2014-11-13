@@ -7,7 +7,7 @@ import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Query;
 
-import com.android.server.repository.Answer;
+import com.android.server.answerrepository.Answer;
 
 public interface AnswerSvcApi {
 	public static final String USER_NAME = "username";
