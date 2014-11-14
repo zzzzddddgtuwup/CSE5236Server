@@ -59,10 +59,10 @@ public class ServerTest {
 		user1 = new ArrayList<>(usersLists).get(0);
 		user2 = new ArrayList<>(usersLists).get(1);
 		
-		ok = userService.validate(new User("zdg","pw"));
-		assertTrue(ok);
-		ok = userService.validate(new User("zdg","aha"));
-		assertTrue(!ok);
+		User tmp = userService.validate(new User("zdg","pw"));
+		assertTrue(tmp!=null);
+		tmp = userService.validate(new User("zdg","aha"));
+		assertTrue(tmp==null);
 //		for(User u:usersLists){
 //			System.out.println(u);
 //		}
@@ -125,6 +125,11 @@ public class ServerTest {
 		answerService.addAnswer(a2);
 		
 		Collection<Answer> answerList = answerService.findByUserName("zdg");
+		for(Answer a : answerList){
+			System.out.println(a);
+		}
+		
+		answerList = answerService.findByQuestionId(11);
 		for(Answer a : answerList){
 			System.out.println(a);
 		}

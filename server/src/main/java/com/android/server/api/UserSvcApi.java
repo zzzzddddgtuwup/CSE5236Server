@@ -21,5 +21,5 @@ public interface UserSvcApi {
 	public boolean addUser(@Body User user);
 	
 	@POST(USER_VALIDATE_PATH)
-	public boolean validate(@Body User user);
+	public User validate(@Body User user);
 }

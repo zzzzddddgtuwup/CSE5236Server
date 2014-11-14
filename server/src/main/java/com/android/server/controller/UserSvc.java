@@ -34,7 +34,9 @@ public class UserSvc implements UserSvcApi{
 
 	@Override
 	@RequestMapping(value=USER_VALIDATE_PATH,method=RequestMethod.POST) 
-	public @ResponseBody boolean validate(@RequestBody User u) {
-		return Lists.newArrayList(user.findAll()).contains(u);
+	public @ResponseBody User validate(@RequestBody User u) {
+		if( Lists.newArrayList(user.findAll()).contains(u))
+			return Lists.newArrayList(user.findByUsername(u.getUsername())).get(0);
+		return null;
 	}
 }

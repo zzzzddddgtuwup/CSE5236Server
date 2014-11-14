@@ -27,6 +27,7 @@ public interface QuestionSvcApi {
 	public static final String QUESTION_FORUM_GET_PATH = 
 			QUESTION_SVC_PATH + "/findf";
 	
+	
 	@GET(QUESTION_SVC_PATH)
 	public Collection<Question> getQuestionList();
 	
@@ -42,4 +43,5 @@ public interface QuestionSvcApi {
 	@GET(QUESTION_FORUM_SEARCH_PATH)
 	public Collection<Question> searchByQuestionInForum(
 			@Query(SEARCH_KEY)String key,@Query(FORUM_ID) long fid);
+	
 }

@@ -15,6 +15,7 @@ public class User {
 	
 	private String username;
 	private String password;
+	private int score;
 	
 	public User(){}
 	
@@ -22,6 +23,7 @@ public class User {
 		super();
 		this.username = username;
 		this.password = password;
+		this.score = 0;
 	}
 	public long getUid() {
 		return uid;
@@ -42,6 +44,14 @@ public class User {
 		this.password = password;
 	}
 	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	@Override
 	public int hashCode() {
 		// Google Guava provides great utilities for hashing
@@ -61,6 +71,6 @@ public class User {
 	}
 	
 	public String toString(){
-		return username + " " + password;
+		return username + " " + password + " " + score;
 	}
 }

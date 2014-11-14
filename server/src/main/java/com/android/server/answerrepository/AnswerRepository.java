@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AnswerRepository extends CrudRepository<Answer, Long> {
 	public Collection<Answer> findByUser_Uid(long uid);
+	
+	public Collection<Answer> findByQuestion_Qid(long qid);
 }

@@ -45,4 +45,11 @@ public class AnswerSvc implements AnswerSvcApi {
 		answers.save(answer);
 		return true;
 	}
+
+	@Override
+	@RequestMapping(value=ANSWER_BY_QUESTION_ID_PATH,method=RequestMethod.GET)
+	public @ResponseBody Collection<Answer> findByQuestionId(
+			@RequestParam(QUESTION_ID) long qid) {
+		return answers.findByQuestion_Qid(qid);
+	}
 }
