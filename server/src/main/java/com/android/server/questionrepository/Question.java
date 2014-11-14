@@ -71,7 +71,10 @@ public class Question {
 	public void setForum(Forum forum) {
 		this.forum = forum;
 	}
-
+	
+	public void addRate(){
+		this.rate++;
+	}
 	@Override
 	public int hashCode() {
 		// Google Guava provides great utilities for hashing

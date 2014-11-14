@@ -52,4 +52,14 @@ public class AnswerSvc implements AnswerSvcApi {
 			@RequestParam(QUESTION_ID) long qid) {
 		return answers.findByQuestion_Qid(qid);
 	}
+
+	@Override
+	@RequestMapping(value=ANSWER_RATE_PATH,method=RequestMethod.GET)
+	public @ResponseBody boolean rateAnswerById(
+			@RequestParam(ANSWER_ID) long aid) {
+		Answer a = answers.findOne(aid);
+		a.addRate();
+		answers.save(a);
+		return true;
+	}
 }

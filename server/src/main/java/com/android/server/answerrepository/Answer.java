@@ -70,7 +70,11 @@ public class Answer {
 	public void setQuestion(Question question) {
 		this.question = question;
 	}
-
+	
+	public void addRate(){
+		this.rate++;
+	}
+	
 	@Override
 	public int hashCode() {
 		// Google Guava provides great utilities for hashing

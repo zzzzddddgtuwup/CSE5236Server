@@ -21,8 +21,8 @@ import com.android.server.userrepository.User;
 import com.google.common.collect.Lists;
 
 public class ServerTest {
-//	private final String TEST_URL = "http://nearby.elasticbeanstalk.com";
-	private final String TEST_URL = "http://localhost:8080/";
+	private final String TEST_URL = "http://nearby.elasticbeanstalk.com";
+//	private final String TEST_URL = "http://localhost:8080/";
 	
 	private QuestionSvcApi questionService = new RestAdapter.Builder()
 		.setEndpoint(TEST_URL).setLogLevel(LogLevel.FULL).build()
@@ -114,9 +114,7 @@ public class ServerTest {
 		Answer a1 = new Answer("haha, I know.");
 		a1.setQuestion(q1);
 		a1.setUser(user2);
-		
-		
-		
+				
 		Answer a2 = new Answer("Sorry, I don't know.");
 		a2.setQuestion(q2);
 		a2.setUser(user1);
@@ -133,5 +131,11 @@ public class ServerTest {
 		for(Answer a : answerList){
 			System.out.println(a);
 		}
+		
+		ok = answerService.rateAnswerById(1);
+		assertTrue(ok);
+		
+		ok = questionService.rateQuestionById(1);
+		assertTrue(ok);
 	}
 }

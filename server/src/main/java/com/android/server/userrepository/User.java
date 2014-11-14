@@ -51,7 +51,10 @@ public class User {
 	public void setScore(int score) {
 		this.score = score;
 	}
-
+	
+	public void addScore(){
+		this.score++;
+	}
 	@Override
 	public int hashCode() {
 		// Google Guava provides great utilities for hashing

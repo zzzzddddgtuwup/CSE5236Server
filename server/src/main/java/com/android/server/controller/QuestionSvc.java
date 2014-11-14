@@ -60,4 +60,14 @@ public class QuestionSvc implements QuestionSvcApi{
 			@RequestParam(SEARCH_KEY) String key,@RequestParam(FORUM_ID) long fid) {
 		return questions.searchByQuestionAndForum("%"+key+"%", fid);
 	}
+
+	@Override
+	@RequestMapping(value=QUESTION_RATE_PATH,method=RequestMethod.GET)
+	public @ResponseBody boolean rateQuestionById(
+			@RequestParam(QUESTION_ID) long qid) {
+		Question question = questions.findOne(qid);
+		question.addRate();
+		questions.save(question);
+		return true;
+	}
 }

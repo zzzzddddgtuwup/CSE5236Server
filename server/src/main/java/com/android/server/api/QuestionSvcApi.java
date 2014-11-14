@@ -16,6 +16,8 @@ public interface QuestionSvcApi {
 	
 	public static final String SEARCH_KEY ="key";
 	
+	public static final String QUESTION_ID = "question_id";
+	
 	public static final String QUESTION_SVC_PATH = "/question";
 	
 	public static final String QUESTION_USER_SEARCH_PATH = 
@@ -26,6 +28,9 @@ public interface QuestionSvcApi {
 	
 	public static final String QUESTION_FORUM_GET_PATH = 
 			QUESTION_SVC_PATH + "/findf";
+	
+	public static final String QUESTION_RATE_PATH = 
+			QUESTION_SVC_PATH + "/rate";
 	
 	
 	@GET(QUESTION_SVC_PATH)
@@ -44,4 +49,6 @@ public interface QuestionSvcApi {
 	public Collection<Question> searchByQuestionInForum(
 			@Query(SEARCH_KEY)String key,@Query(FORUM_ID) long fid);
 	
+	@GET(QUESTION_RATE_PATH)
+	public boolean rateQuestionById(@Query(QUESTION_ID) long qid);
 }
