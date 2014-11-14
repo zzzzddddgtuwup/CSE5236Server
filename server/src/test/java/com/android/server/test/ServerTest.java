@@ -103,13 +103,19 @@ public class ServerTest {
 		for(Question q:questionList){
 			System.out.println(q);
 		}
-		
+		questionList = questionService.searchByQuestionInForum("who", 1);
+		System.out.println("This is for search");
+		for(Question q:questionList){
+			System.out.println(q);
+		}
 		questionList = questionService.getQuestionList();
 		q1 = Lists.newArrayList(questionList).get(0);
 		q2 = Lists.newArrayList(questionList).get(1);
 		Answer a1 = new Answer("haha, I know.");
 		a1.setQuestion(q1);
 		a1.setUser(user2);
+		
+		
 		
 		Answer a2 = new Answer("Sorry, I don't know.");
 		a2.setQuestion(q2);

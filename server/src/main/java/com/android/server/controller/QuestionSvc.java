@@ -41,7 +41,7 @@ public class QuestionSvc implements QuestionSvcApi{
 	}
 
 	@Override
-	@RequestMapping(value=QUESTION_FORUM_SEARCH_PATH, method=RequestMethod.GET)
+	@RequestMapping(value=QUESTION_FORUM_GET_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Question> findByForumId(
 			@RequestParam(FORUM_ID) long fid) {
 		return questions.findByForum_Fid(fid);
@@ -54,4 +54,10 @@ public class QuestionSvc implements QuestionSvcApi{
 		return true;
 	}
 
+	@Override
+	@RequestMapping(value=QUESTION_FORUM_SEARCH_PATH, method=RequestMethod.GET)
+	public @ResponseBody Collection<Question> searchByQuestionInForum(
+			@RequestParam(SEARCH_KEY) String key,@RequestParam(FORUM_ID) long fid) {
+		return questions.searchByQuestionAndForum("%"+key+"%", fid);
+	}
 }
