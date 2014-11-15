@@ -73,25 +73,18 @@ public class ServerTest {
 			forumService.addForum(forum);
 		}
 		
-		Collection<Forum> forumLists = forumService.getForumList();
-		Forum f1 = Lists.newArrayList(forumLists).get(0);
-		Forum f2 = Lists.newArrayList(forumLists).get(1);
-		
-		forumLists = forumService.searchByName("ohio");
+		Collection<Forum> forumLists = forumService.searchByName("ohio");
 		for(Forum f:forumLists){
 			System.out.println("hahahah" + f.getName());
 		}
-		Question q1 = new Question("who am I?");
-		q1.setForum(f1);
-		q1.setUser(user1);
 		
-		Question q2 = new Question("what is true?");
-		q2.setForum(f2);
-		q2.setUser(user2);
+		for(int i = 0; i<5;i++){
+			questionService.addQuestion("this is question i" + i,"zdg",1);
+		}
 		
-		ok = questionService.addQuestion(q1);
+		ok = questionService.addQuestion("who am I?","zdg",1);
 		assertTrue(ok);
-		ok = questionService.addQuestion(q2);
+		ok = questionService.addQuestion("what is true?","tim",1);
 		assertTrue(ok);
 		
 		Collection<Question> questionList = questionService.findByUserName("zdg");
@@ -109,8 +102,8 @@ public class ServerTest {
 			System.out.println(q);
 		}
 		questionList = questionService.getQuestionList();
-		q1 = Lists.newArrayList(questionList).get(0);
-		q2 = Lists.newArrayList(questionList).get(1);
+		Question q1 = Lists.newArrayList(questionList).get(0);
+		Question q2 = Lists.newArrayList(questionList).get(1);
 		Answer a1 = new Answer("haha, I know.");
 		a1.setQuestion(q1);
 		a1.setUser(user2);
@@ -137,5 +130,10 @@ public class ServerTest {
 		
 		ok = questionService.rateQuestionById(1);
 		assertTrue(ok);
+		
+		questionList = questionService.getSortedQuestionList(1);
+		for(Question q:questionList){
+			System.out.println(q);
+		}
 	}
 }

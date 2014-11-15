@@ -16,4 +16,5 @@ public interface QuestionRepository extends CrudRepository<Question, Long>{
 	@Query("select q from Question q where q.content like ?1 and q.forum.fid = ?2")
 	public List<Question> searchByQuestionAndForum(String regex, long forumId);
 	
+	public List<Question> findTop5ByForum_FidOrderByRateDesc(long fid);
 }

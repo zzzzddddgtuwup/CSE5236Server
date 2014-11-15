@@ -3,6 +3,7 @@ package com.android.server.controller;
 import java.util.Collection;
 
 import com.android.server.api.QuestionSvcApi;
+import com.android.server.forumrepository.ForumRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,9 @@ public class QuestionSvc implements QuestionSvcApi{
 	@Autowired
 	private UserRepository user;
 	
+	@Autowired
+	private ForumRepository forumRepository;
+	
 	@Override
 	@RequestMapping(value=QUESTION_SVC_PATH, method=RequestMethod.GET)
 	public @ResponseBody Collection<Question> getQuestionList() {
@@ -48,8 +52,14 @@ public class QuestionSvc implements QuestionSvcApi{
 	}
 
 	@Override
-	@RequestMapping(value=QUESTION_SVC_PATH, method=RequestMethod.POST)
-	public @ResponseBody boolean addQuestion(@RequestBody Question q) {
+	@RequestMapping(value=QUESTION_ADD_PATH, method=RequestMethod.GET)
+	public @ResponseBody boolean addQuestion(
+			@RequestParam(QUESTION_CONTENT)String content, 
+			@RequestParam(USER_NAME)String username,
+			@RequestParam(FORUM_ID)long fid) {
+		Question q = new Question(content);
+		q.setForum(forumRepository.findOne(fid));
+		q.setUser(Lists.newArrayList(user.findByUsername(username)).get(0));
 		questions.save(q);
 		return true;
 	}
@@ -69,5 +79,12 @@ public class QuestionSvc implements QuestionSvcApi{
 		question.addRate();
 		questions.save(question);
 		return true;
+	}
+
+	@Override
+	@RequestMapping(value=QUESTION_SORT_PATH,method=RequestMethod.GET)
+	public @ResponseBody Collection<Question> getSortedQuestionList(
+			@RequestParam(FORUM_ID)long fid) {
+		return questions.findTop5ByForum_FidOrderByRateDesc(fid);
 	}
 }
