@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.android.server.answerrepository.Answer;
 import com.android.server.answerrepository.AnswerRepository;
 import com.android.server.api.AnswerSvcApi;
+import com.android.server.questionrepository.QuestionRepository;
+import com.android.server.userrepository.User;
 import com.android.server.userrepository.UserRepository;
 import com.google.common.collect.Lists;
 
@@ -24,6 +25,9 @@ public class AnswerSvc implements AnswerSvcApi {
 	
 	@Autowired 
 	private UserRepository user;
+	
+	@Autowired 
+	private QuestionRepository questionRepository;
 	
 	@Override
 	@RequestMapping(value=ANSWER_SVC_PATH, method=RequestMethod.GET)
@@ -40,8 +44,16 @@ public class AnswerSvc implements AnswerSvcApi {
 	}
 
 	@Override
-	@RequestMapping(value=ANSWER_SVC_PATH,method=RequestMethod.POST)
-	public @ResponseBody boolean addAnswer(@RequestBody Answer answer) {
+	@RequestMapping(value=ANSWER_ADD_PATH,method=RequestMethod.GET)
+	public @ResponseBody boolean addAnswer(
+			@RequestParam(ANSWER_CONTENT)String content,
+			@RequestParam(USER_NAME)String username,
+			@RequestParam(QUESTION_ID)long qid) {
+		Answer answer = new Answer(content);
+		answer.setQuestion(questionRepository.findOne(qid));
+		answer.setUser(Lists.newArrayList(user.findByUsername(username)).get(0));
+		answer.getUser().addAnswer_count();
+		answer.getQuestion().getUser().addNotification(2);
 		answers.save(answer);
 		return true;
 	}
@@ -58,6 +70,9 @@ public class AnswerSvc implements AnswerSvcApi {
 	public @ResponseBody boolean rateAnswerById(
 			@RequestParam(ANSWER_ID) long aid) {
 		Answer a = answers.findOne(aid);
+		User answerOwnerUser = a.getUser();
+		answerOwnerUser.addScore();
+		answerOwnerUser.addNotification(3);
 		a.addRate();
 		answers.save(a);
 		return true;

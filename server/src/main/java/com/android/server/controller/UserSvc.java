@@ -1,12 +1,15 @@
 package com.android.server.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.android.server.api.UserSvcApi;
@@ -27,9 +30,13 @@ public class UserSvc implements UserSvcApi{
 
 	@Override
 	@RequestMapping(value=USER_SVC_PATH, method=RequestMethod.POST)
-	public @ResponseBody boolean addUser(@RequestBody User u) {
-		user.save(u);
-		return true;
+	public @ResponseBody int addUser(@RequestBody User u) {
+		if(user.findByUsername(u.getUsername()).size()!=0){
+			return -1;//username existed
+		}else{
+			user.save(u);
+			return 1;
+		}
 	}
 
 	@Override
@@ -39,4 +46,25 @@ public class UserSvc implements UserSvcApi{
 			return Lists.newArrayList(user.findByUsername(u.getUsername())).get(0);
 		return null;
 	}
+
+	@Override
+	@RequestMapping(value=USER_NOTIFICATION_PATH,method=RequestMethod.GET)
+	public @ResponseBody Collection<Integer> getNotificationSet(
+			@RequestParam(USER_NAME)String username) {
+		User u = Lists.newArrayList(user.findByUsername(username)).get(0);
+		List<Integer> result = new ArrayList<>();
+		if(u.isNotification_question_rated()) result.add(1);
+		if(u.isNotification_answerd()) result.add(2);
+		if(u.isNotification_answer_rated()) result.add(3);
+		u.clearNotification();
+		user.save(u);
+		return result;
+	}
+
+	@Override
+	@RequestMapping(value=USER_INFO_PATH,method=RequestMethod.GET)
+	public @ResponseBody User getInfoByName(
+			@RequestParam(USER_NAME) String username) {
+		return Lists.newArrayList(user.findByUsername(username)).get(0);
+	}		
 }

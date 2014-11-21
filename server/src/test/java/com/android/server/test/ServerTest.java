@@ -18,7 +18,6 @@ import com.android.server.api.UserSvcApi;
 import com.android.server.forumrepository.Forum;
 import com.android.server.questionrepository.Question;
 import com.android.server.userrepository.User;
-import com.google.common.collect.Lists;
 
 public class ServerTest {
 	private final String TEST_URL = "http://nearby.elasticbeanstalk.com";
@@ -47,11 +46,12 @@ public class ServerTest {
 		//add user2
 		User user2 = new User("tim","pw");
 		
-		ok = userService.addUser(user1);
-		System.out.println(ok);
-		assertTrue(ok);
-		ok = userService.addUser(user2);
-		assertTrue(ok);
+		int ret = userService.addUser(user1);
+		assertTrue(ret==1);
+		ret = userService.addUser(user2);
+		assertTrue(ret==1);
+		ret = userService.addUser(new User("zdg","test"));
+		assertTrue(ret==-1);
 		
 		Collection<User> usersLists = userService.getUserList();
 		assertTrue(usersLists.contains(user1));
@@ -102,18 +102,10 @@ public class ServerTest {
 			System.out.println(q);
 		}
 		questionList = questionService.getQuestionList();
-		Question q1 = Lists.newArrayList(questionList).get(0);
-		Question q2 = Lists.newArrayList(questionList).get(1);
-		Answer a1 = new Answer("haha, I know.");
-		a1.setQuestion(q1);
-		a1.setUser(user2);
 				
-		Answer a2 = new Answer("Sorry, I don't know.");
-		a2.setQuestion(q2);
-		a2.setUser(user1);
 		
-		answerService.addAnswer(a1);
-		answerService.addAnswer(a2);
+		answerService.addAnswer("haha, I know.","zdg",1);
+		answerService.addAnswer("Sorry, I don't know.","tim",2);
 		
 		Collection<Answer> answerList = answerService.findByUserName("zdg");
 		for(Answer a : answerList){
@@ -135,5 +127,24 @@ public class ServerTest {
 		for(Question q:questionList){
 			System.out.println(q);
 		}
+		
+		Collection<Integer> notiCollection = userService.getNotificationSet("zdg");
+		for(Integer i:notiCollection){
+			System.out.println(i);
+		}
+		
+		notiCollection = userService.getNotificationSet("zdg");
+		for(Integer i:notiCollection){
+			System.out.println(i);
+		}
+		
+		ok = questionService.rateQuestionById(1);
+		assertTrue(ok);
+		
+		notiCollection = userService.getNotificationSet("zdg");
+		for(Integer i:notiCollection){
+			System.out.println(i);
+		}
+		
 	}
 }

@@ -2,19 +2,18 @@ package com.android.server.controller;
 
 import java.util.Collection;
 
-import com.android.server.api.QuestionSvcApi;
-import com.android.server.forumrepository.ForumRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.android.server.api.QuestionSvcApi;
+import com.android.server.forumrepository.ForumRepository;
 import com.android.server.questionrepository.Question;
 import com.android.server.questionrepository.QuestionRepository;
+import com.android.server.userrepository.User;
 import com.android.server.userrepository.UserRepository;
 import com.google.common.collect.Lists;
 
@@ -60,6 +59,7 @@ public class QuestionSvc implements QuestionSvcApi{
 		Question q = new Question(content);
 		q.setForum(forumRepository.findOne(fid));
 		q.setUser(Lists.newArrayList(user.findByUsername(username)).get(0));
+		q.getUser().addQuestion_count();
 		questions.save(q);
 		return true;
 	}
@@ -76,6 +76,9 @@ public class QuestionSvc implements QuestionSvcApi{
 	public @ResponseBody boolean rateQuestionById(
 			@RequestParam(QUESTION_ID) long qid) {
 		Question question = questions.findOne(qid);
+		User questionOwner = question.getUser();
+		questionOwner.addScore();
+		questionOwner.addNotification(1);
 		question.addRate();
 		questions.save(question);
 		return true;
