@@ -147,4 +147,10 @@ public class ServerTest {
 		}
 		
 	}
+	
+//	@Test
+//	public void addForum(){
+//		Forum forum = new Forum("Caldwell Laboratory");
+//		forumService.addForum(forum);
+//	}
 }
